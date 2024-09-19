@@ -1,8 +1,8 @@
 import { _decorator, Component, Node, v3 } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('bullet')
-export class bullet extends Component {
+@ccclass('BulletCtl')
+export class BulletCtl extends Component {
 
 
   @property
