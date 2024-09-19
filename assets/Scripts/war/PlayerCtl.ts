@@ -4,6 +4,7 @@ const { ccclass, property } = _decorator;
 import { BulletCtl } from './BulletCtl';
 import { EmemyCtl } from './EmemyCtl';
 import { BgCrl } from './BgCrl';
+import { StartGameCtl } from './StartGameCtl';
 
 @ccclass('PlayerCtl')
 export class PlayerCtl extends Component {
@@ -13,6 +14,9 @@ export class PlayerCtl extends Component {
 
   @property(Prefab)
   ememyProfab: Prefab = null;
+
+  @property(StartGameCtl)
+  startgame: StartGameCtl = null
 
 
   onLoad() {
@@ -71,13 +75,29 @@ export class PlayerCtl extends Component {
         }
       }
     );
-  }
 
+    this.startgame.show()
+  }
 
   start() {
     this.node.on(NodeEventType.TOUCH_MOVE, (touch: EventTouch) => {
       this.node.setWorldPosition(v3(touch.getUILocation().x, touch.getUILocation().y))
     })
+  }
+
+  // 开始游戏
+  startGame() {
+
+    resources.load(
+      "AirplaneWars/hero1/spriteFrame",
+      SpriteFrame,
+      (err: Error, data: SpriteFrame) => {
+        if (!err) {
+          this.node.getComponent(Sprite).spriteFrame = data;
+        }
+      }
+    );
+
 
 
     // 创建子弹
@@ -109,8 +129,6 @@ export class PlayerCtl extends Component {
       enemy.setParent(this.node.parent);
       enemy.setPosition(xPos, 390 * 2);
     }, 0.5);
-
-
   }
 
   update(deltaTime: number) {

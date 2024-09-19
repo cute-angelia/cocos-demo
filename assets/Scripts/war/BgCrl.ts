@@ -1,15 +1,21 @@
-import { _decorator, CCBoolean, Component, Node } from 'cc';
+import { _decorator, CCBoolean, Component, find, Node } from 'cc';
+import { PlayerCtl } from './PlayerCtl';
+import { StartGameCtl } from './StartGameCtl';
 const { ccclass, property } = _decorator;
 
 @ccclass('BgCrl')
 export class BgCrl extends Component {
-
-
   @property
   height: number = 852;
 
   @property(CCBoolean)
-  private symbol: boolean = true;
+  symbol: boolean = true;
+
+  @property(PlayerCtl)
+  player: PlayerCtl = null;
+
+  @property(StartGameCtl)
+  startgame: StartGameCtl = null
 
   start() {
 
@@ -35,6 +41,16 @@ export class BgCrl extends Component {
 
   restart() {
     this.symbol = true
+
+    console.log("restart game")
+
+    // 隐藏按钮
+    this.startgame.hide();
+
+    // 开始游戏
+    // find("Canvas/player/hero1").getComponent(PlayerCtl)?.startGame();
+    this.player.startGame();
+
   }
 }
 
